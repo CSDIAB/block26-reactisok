@@ -30,39 +30,46 @@ function Title({ companies }){
   );
 }
 
-const Companydetails = ({ companies }) => {
+
+
+const Companydetails = ({ company }) => {
   return (
-    <ul>
-      {
-        companies.map((companies)=> {
-          return (
+    <ul key = {company.id}>
             <li>
-                <em> { companies.phone } { companies.state } { companies.catchPhrase} </em>
+                <em> { company.phone } { company.state } { company.catchPhrase} </em>
             </li>
-             
             
-          );
-        })
-      }
     </ul>
   );
 };
 
+
 const Companies =  ({ companies })=> {
-  return (
+  let idcounter = 0;
+    return (
     <ul>
       {
-        companies.map((companies)=> {
+        companies.map((companies)=> {    
+        const [display, callCompanydetails] = React.useState(false);
           return (
-            <li>
-                <a href = {`#${companies.id}`}> { companies.name } </a>
+            <>
+            <li key = {idcounter++}>
                 
-             
+                <a onClick = { ()=> callCompanydetails(!display)} href = {`#${companies.id}`}> { companies.name } </a>
+                
+                
             </li>
+            <div>
+                { display && 
+                <Companydetails company = { companies } />
+                }
+            </div> 
+            </>
           );
-        })
+          
+        }) 
       }
-      <Companydetails companies = { companies } />
+    
     </ul>
   );
 };
